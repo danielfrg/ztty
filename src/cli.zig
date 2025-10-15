@@ -4,14 +4,6 @@ const Peekable = @import("peekable.zig").Peekable;
 const Options = struct {
     stdin: []const u8 = "",
     stdout: []const u8 = "",
-
-    // owns_stdin: bool = false,
-    // owns_stdout: bool = false,
-    //
-    // pub fn deinit(self: *Options, alloc: std.mem.Allocator) void {
-    //     if (self.owns_stdin) alloc.free(self.stdin);
-    //     if (self.owns_stdout) alloc.free(self.stdout);
-    // }
 };
 
 const ParseOptionsError = error{
@@ -25,11 +17,6 @@ fn parseArg(
     arg: []const u8,
 ) ![]const u8 {
     if (iter.peek()) |peaked_value| {
-        // const value = alloc.dupe(u8, peaked_value) catch {
-        //     std.debug.print("Error: Invalid value for `{s}`: '{s}'\n", .{ arg, peaked_value });
-        //     return ParseOptionsError.InvalidValue;
-        // };
-
         // Parsed the value, so we can now consume it and return it
         _ = iter.next();
         return peaked_value;
