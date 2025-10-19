@@ -59,7 +59,7 @@ test "parse one option" {
 
     var iter = try std.process.ArgIteratorGeneral(.{}).init(
         alloc,
-        "ttyz --stdin infile",
+        "ztty --stdin infile",
     );
     defer iter.deinit();
 
@@ -75,7 +75,7 @@ test "parse multiple options" {
 
     var iter = try std.process.ArgIteratorGeneral(.{}).init(
         alloc,
-        "ttyz --stdin infile --stdout outfile",
+        "ztty --stdin infile --stdout outfile",
     );
     defer iter.deinit();
 
