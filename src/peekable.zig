@@ -1,13 +1,13 @@
 const std = @import("std");
 
-pub fn Peekable(comptime T: type, comptime Iterator: type) type {
+pub fn Peekable(comptime T: type, comptime IteratorT: type) type {
     return struct {
-        inner: Iterator,
         peeked_item: ?T,
+        iter: IteratorT,
 
-        pub fn init(inner: Iterator) @This() {
+        pub fn init(iter: IteratorT) @This() {
             return .{
-                .inner = inner,
+                .iter = iter,
                 .peeked_item = null,
             };
         }
@@ -17,12 +17,12 @@ pub fn Peekable(comptime T: type, comptime Iterator: type) type {
                 self.peeked_item = null;
                 return item;
             }
-            return self.inner.next();
+            return self.iter.next();
         }
 
         pub fn peek(self: *@This()) ?T {
             if (self.peeked_item == null) {
-                self.peeked_item = self.inner.next();
+                self.peeked_item = self.iter.next();
             }
             return self.peeked_item;
         }

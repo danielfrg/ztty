@@ -12,24 +12,10 @@ const ParseOptionsError = error{
     UnknownArgument,
 };
 
-fn parseArg(
-    iter: anytype,
-    arg: []const u8,
-) ![]const u8 {
-    if (iter.peek()) |peaked_value| {
-        // Parsed the value, so we can now consume it and return it
-        _ = iter.next();
-        return peaked_value;
-    } else {
-        std.debug.print("Error: Value required for {s}\n", .{arg});
-        return ParseOptionsError.MissingRequiredValue;
-    }
-}
-
 pub fn parseArgs(args: anytype) !Options {
     var iter = Peekable([]const u8, @TypeOf(args)).init(args);
 
-    // Skip the first argument, which is the path to the executable.
+    // Skip the first argument, which is the path to the executable
     _ = iter.next();
 
     var options = Options{
@@ -51,6 +37,20 @@ pub fn parseArgs(args: anytype) !Options {
     }
 
     return options;
+}
+
+fn parseArg(
+    iter: anytype,
+    arg: []const u8,
+) ![]const u8 {
+    if (iter.peek()) |peaked_value| {
+        // Parsed the value, so we can now consume it and return it
+        _ = iter.next();
+        return peaked_value;
+    } else {
+        std.debug.print("Error: Value required for {s}\n", .{arg});
+        return ParseOptionsError.MissingRequiredValue;
+    }
 }
 
 test "parse one option" {

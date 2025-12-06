@@ -7,5 +7,5 @@ pub fn main() !void {
     var args = try std.process.argsWithAllocator(gpa);
     defer args.deinit();
 
-    _ = try cli.parseArgs(gpa, args);
+    _ = try cli.parseArgs(args);
 }
